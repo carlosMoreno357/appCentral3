@@ -26,6 +26,10 @@ export default class Main extends Component {
     }, () => {console.log(this.state.contador);} );
   }
 
+  navegarPantallaB = () =>{
+    this.props.navigation.navigate('PantallaB',{fecha: new Date()});
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -38,6 +42,7 @@ export default class Main extends Component {
           <Button title='Decrementar' onPress={this.decrementarContador}></Button>
           <Button title='Incrementar' onPress={this.incrementarContador}></Button>
         </View>
+        <Button title='Siguiente Pantalla =>' onPress={this.navegarPantallaB}></Button>
       </View>
     );
   }

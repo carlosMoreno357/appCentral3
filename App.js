@@ -1,33 +1,47 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { Constants, ScreenOrientation } from 'expo';
-import Navegador from './components/navegador';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import Main from './components/main';
+import PantallaB from './components/pantallaB';
 
-export default class App extends Component {
+class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-
   }
-
-  async componentWillMount(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL);
-  }
-
-
-  render(){
+  render() {
     return (
-      <View style={styles.container}>
-        <Main></Main>
-      </View>
+      <Main navigation={this.props.navigation}></Main>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+class PantallaBScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
+    return (
+      <PantallaB navigation={this.props.navigation}></PantallaB>
+    );
+  }
+}
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation}) => ({
+      title: 'Pantalla 1',
+    }),
   },
+  PantallaB:{
+    screen: PantallaBScreen,
+    navigationOptions: ({ navigation}) => ({
+      title: 'Pantalla B',
+    }),
+  }
 });
+
+export default createAppContainer(AppNavigator);
 
