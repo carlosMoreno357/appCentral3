@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Main from './components/main';
 import PantallaB from './components/pantallaB';
+import PantallaC from './components/pantallaC';
 
 class HomeScreen extends React.Component {
   constructor(props){
@@ -27,6 +28,17 @@ class PantallaBScreen extends React.Component {
     );
   }
 }
+class PantallaCScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
+    return (
+      <PantallaC navigation={this.props.navigation}></PantallaC>
+    );
+  }
+}
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -39,6 +51,12 @@ const AppNavigator = createStackNavigator({
     screen: PantallaBScreen,
     navigationOptions: ({ navigation}) => ({
       title: 'Pantalla B',
+    }),
+  },
+  PantallaC:{
+    screen: PantallaCScreen,
+    navigationOptions: ({ navigation}) => ({
+      title: 'Pantalla C',
     }),
   }
 });
