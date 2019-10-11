@@ -70,8 +70,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'space-between',
     justifyContent: 'space-evenly',
-    position: 'absolute',
-    top: 200,
   }
 });
 
