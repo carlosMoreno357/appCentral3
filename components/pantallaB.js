@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-export default class pantallaB extends Component {
+// REDUX
+import { connect } from 'react-redux';
+
+class pantallaB extends Component {
     constructor(props){
         super(props);
-        console.log(this.props.navigation.state.params.fecha);
     }
 
     render() {
         return (
             <View>
-                <Text>Fecha ISO: {this.props.navigation.state.params.fecha.toISOString().substring(0,10)}</Text>
-                <Text>Fecha Local: {this.props.navigation.state.params.fecha.toLocaleString()}</Text>
+                <Text
+                    style={{color: 'darkslategray', alignSelf: 'center', fontSize: 50, fontWeight: 'bold'}}
+                >
+                    {this.props.numero}
+                </Text>
             </View>
         )
     }
 }
+
+    const mapStateToProps = state => ({
+        ...state,
+    });
+  
+  const mapDispatchToProps = {
+    
+  };
+  
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(pantallaB);
+  

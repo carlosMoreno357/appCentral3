@@ -6,13 +6,22 @@ import Main from './components/main';
 import PantallaB from './components/pantallaB';
 import PantallaC from './components/pantallaC';
 
+//REDUX
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './components/reducer';
+
+const store = createStore(reducer);
+
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
   }
   render() {
     return (
-      <Main navigation={this.props.navigation}></Main>
+      <Provider store={store}>
+        <Main navigation={this.props.navigation}></Main>
+      </Provider>
     );
   }
 }
@@ -24,7 +33,9 @@ class PantallaBScreen extends React.Component {
 
   render() {
     return (
-      <PantallaB navigation={this.props.navigation}></PantallaB>
+      <Provider store={store}>
+        <PantallaB navigation={this.props.navigation}></PantallaB>
+      </Provider>
     );
   }
 }
@@ -35,7 +46,9 @@ class PantallaCScreen extends React.Component {
 
   render() {
     return (
-      <PantallaC navigation={this.props.navigation}></PantallaC>
+      <Provider store={store}>
+        <PantallaC navigation={this.props.navigation}></PantallaC>
+      </Provider>
     );
   }
 }
@@ -45,6 +58,7 @@ const AppNavigator = createStackNavigator({
     screen: HomeScreen,
     navigationOptions: ({ navigation}) => ({
       title: 'Pantalla 1',
+      header: null,
     }),
   },
   PantallaB:{

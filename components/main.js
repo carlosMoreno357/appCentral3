@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default class Main extends Component {
+//REDUX
+import { connect } from 'react-redux';
+import { sumar, restar } from './reducer';
+
+
+class Main extends Component {
   constructor(props){
     super(props);
-
+    console.log(this.props);
     this.state={
       mensaje: '',
       contador: 0
@@ -23,29 +28,28 @@ export default class Main extends Component {
     this.setState({
       mensaje:'Contador decrementado',
       contador: this.state.contador-1
-    }, () => {console.log(this.state.contador);} );
+    });
   }
 
   navegarPantallaB = () =>{
-    this.props.navigation.navigate('PantallaB',{fecha: new Date()});
+    this.props.navigation.navigate('PantallaB');
   }
 
   navegarPantallaC = () =>{
-    console.log(this.props.navigation);
-    this.props.navigation.navigate('PantallaC',{texto: 'Hola desde Pantalla C'});
+    this.props.navigation.navigate('PantallaC');
   }
 
   render(){
     return (
       <View style={styles.container}>
         <Text>Bienvenido a React Native</Text>
-        { this.state.contador <= 0 ?
-          <Text style={{color: '#A00000'}}>{this.state.mensaje}:{this.state.contador}</Text>
-          : <Text style={{color: 'green'}}>{this.state.mensaje}:{this.state.contador}</Text>
+        { this.props.numero <= 0 ?
+          <Text style={{color: '#A00000'}}>{this.props.mensaje}:{this.props.numero}</Text>
+          : <Text style={{color: 'green'}}>{this.props.mensaje}:{this.props.numero}</Text>
         }
         <View style={styles.footer}>
-          <Button title='Decrementar' onPress={this.decrementarContador}></Button>
-          <Button title='Incrementar' onPress={this.incrementarContador}></Button>
+          <Button title='Decrementar' onPress={this.props.restar}></Button>
+          <Button title='Incrementar' onPress={this.props.sumar}></Button>
         </View>
         <Button title='Pantalla B =>' onPress={this.navegarPantallaB}></Button>
         <Button title='Pantalla C =>' onPress={this.navegarPantallaC}></Button>
@@ -70,3 +74,16 @@ const styles = StyleSheet.create({
     top: 200,
   }
 });
+
+
+const mapStateToProps = state => ({
+  ...state,
+});
+
+const mapDispatchToProps = {
+  sumar,
+  restar,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

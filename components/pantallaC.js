@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 
-export default class pantallaC extends Component {
+// REDUX
+import { connect } from 'react-redux';
+
+class pantallaC extends Component {
     constructor(props){
         super(props);
     }
     render() {
         return (
             <View>
-                <Text> {this.props.navigation.state.params.texto} </Text>
+                <Text>  </Text>
             </View>
         )
     }
 }
+
+
+const mapStateToProps = state => ({
+    ...state,
+  });
+  
+  const mapDispatchToProps = {
+    
+  };
+  
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(pantallaC);
