@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19004,
-  "packagerPort": 19005,
-  "packagerPid": 25704,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 24432,
   "expoServerNgrokUrl": "https://pc-8s7.carlos-moreno.appcentral3.exp.direct",
   "packagerNgrokUrl": "https://packager.pc-8s7.carlos-moreno.appcentral3.exp.direct",
-  "ngrokPid": 25752,
-  "devToolsPort": 19003
+  "ngrokPid": 23548,
+  "devToolsPort": 19002
 }
