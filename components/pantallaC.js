@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
+import { View, AsyncStorage, ScrollView, ActivityIndicator, Text } from 'react-native';
 import {ListItem, Input,Button} from 'react-native-elements';
 
 // REDUX
@@ -10,7 +10,8 @@ class pantallaC extends Component {
         super(props);
         this.state={
             usuarios: [],
-            nombre: ''
+            nombre: '',
+            subiendo: false
         };
     }
 
@@ -53,6 +54,37 @@ class pantallaC extends Component {
         });
     }
 
+
+    insertBDD = () =>{
+        if(this.state.usuarios.length>0){
+            this.setState({subiendo: true});
+            
+            this.state.usuarios.map((usuario) => {
+                //Revisar inserciones en:
+                // https://webhooks.mongodb-stitch.com/api/client/v2.0/app/rest-porxi/service/api/incoming_webhook/getData
+                fetch('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/rest-porxi/service/api/incoming_webhook/storeData', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(usuario),
+                }).then((response)=> response.json())
+                    .then((responseJSON)=>{
+                        console.log(responseJSON);
+                    });
+                    
+
+            });
+            
+            this.limpiarUsuarios();
+            this.setState({subiendo: false});
+            
+        }else{
+            alert('No hay datos para subir');
+        }
+    }
+
     render() {
         return (
             <View style={{flex:1, justifyContent:'space-evenly', alignContent:'center'}}>
@@ -63,28 +95,37 @@ class pantallaC extends Component {
                
                 <ScrollView>
                     {
-                        this.state.usuarios.length > 0
-                        ? this.state.usuarios.map((usuario) => {
-                           return (
-                               <ListItem 
-                                key={usuario.key}
-                                title={usuario.nombreUsuario}
-                                subtitle={"No. Usuario:"+usuario.key}
-                                bottomDivider
-                                rightElement={<Button 
-                                    raised type='outline'
-                                    title='x'
-                                    containerStyle={{width: 44}}
-                                    onPress={() => {this.borrarUsuario(usuario.key)}}
-                                    >
-                                    </Button>}
-                                >
-                                </ListItem>)
-                        })
-                        : <ActivityIndicator style={{marginTop: 200}}></ActivityIndicator>
+                        this.state.subiendo === false
+                            ?this.state.usuarios.length > 0
+                                ? this.state.usuarios.map((usuario) => {
+                                return (
+                                    <ListItem 
+                                        key={usuario.key}
+                                        title={usuario.nombreUsuario}
+                                        subtitle={"No. Usuario:"+usuario.key}
+                                        bottomDivider
+                                        rightElement={<Button 
+                                            raised type='outline'
+                                            title='x'
+                                            containerStyle={{width: 44}}
+                                            onPress={() => {this.borrarUsuario(usuario.key)}}
+                                            >
+                                            </Button>}
+                                        >
+                                        </ListItem>)
+                                })
+                                : <Text style={{marginTop: 200, alignSelf: 'center', color: '#555'}} >Lista Vacía</Text>
+                            : <ActivityIndicator style={{marginTop: 200}}></ActivityIndicator>
                     }
                 </ScrollView>
-                <Button raised type='clear' containerStyle={{width: '50%', margin: 20, alignSelf:'center'}} title='Limpiar Lista' onPress={this.limpiarUsuarios}></Button>
+                <Button raised type='clear' containerStyle={{width: '50%', margin: 10, alignSelf:'center'}} title='Limpiar Lista' onPress={this.limpiarUsuarios}></Button>
+                <Button 
+                    raised
+                    icon={{name: 'upload', type: 'font-awesome', size:18, color:'#FFF'}}
+                    containerStyle={{ margin: 20, alignSelf:'flex-end'}}
+                    color='#6BF0FF'
+                    onPress={this.insertBDD}>
+                </Button>
             </View>
         )
     }
